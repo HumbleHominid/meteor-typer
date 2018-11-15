@@ -1,0 +1,17 @@
+body {
+    margin: 0;
+    background-color: #888;
+}
+// article for the application
+article {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr [play-area] auto 1fr;
+}
+
+.play-area {
+    height: 100vh;
+    background-color: #ccc;
+    grid-column-start: play-area;
+}
