@@ -1,17 +1,64 @@
 body {
     margin: 0;
-    background-color: #888;
 }
 // article for the application
 article {
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr [play-area] auto 1fr;
+    position: absolute;
+    background-color: #888;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
 }
 
 .play-area {
-    height: 100vh;
+    position: absolute;
+    max-height: 100vh;
     background-color: #ccc;
-    grid-column-start: play-area;
+
+    .render-area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.background {
+    max-height: 100vh;
+}
+
+.menu-list {
+    position: absolute;
+    display: grid;
+    height: 100%;
+    width: 100%;
+    grid-template-columns: auto [center] max-content auto;
+    grid-template-rows: auto [center] auto auto;
+
+    .menu-wrapper {
+        height: 50%;
+        display: flex;
+        justify-content: space-around;
+        flex-direction: column;
+        grid-row-start: center;
+        grid-column-start: center;
+        color: #ccc;
+        font-size: 4vh;
+
+        .menu-item {
+            text-align: center;
+        }
+
+        .menu-item:hover {
+            cursor: pointer;
+        }
+
+        .menu-item {
+            &.selected {
+                color: white;
+            }
+        }
+    }
 }

@@ -1,5 +1,9 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
-
-{{outlet}}
+<article>
+    <div class="play-area">
+        <img src="/background.png" class="background"/>
+        <div class="render-area">
+            {{menu-system}}
+        </div>
+        {{outlet}}
+    </div>
+</article>
