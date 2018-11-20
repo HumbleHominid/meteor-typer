@@ -1,4 +1,8 @@
 {{#each meteors as |meteor index|}}
     {{meteor-display data=meteor}}
 {{/each}}
-{{textarea class="type-area" placeholder="Type responses here"}}
+<textarea type="text" oninput={{action 'testMeteors'}} class="type-area" placeholder="Type responses here" />
+<div class="meteor-score">
+    <div class="score-desc">Score:</div>
+    <div class="score-value">{{score}}</div>
+</div>
