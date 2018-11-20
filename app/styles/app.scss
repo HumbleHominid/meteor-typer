@@ -49,16 +49,46 @@ article {
 
         .menu-item {
             text-align: center;
-        }
-
-        .menu-item:hover {
-            cursor: pointer;
-        }
-
-        .menu-item {
+            &:hover {
+                cursor: pointer;
+            }
             &.selected {
                 color: white;
             }
         }
     }
+}
+
+.play-zone {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    .meteor {
+        position: absolute;
+        height: 20%;
+
+        .meteor-img {
+            position: absolute;
+            height: 100%;
+        }
+
+        .meteor-text {
+            position:absolute;
+            bottom: 10%;
+            background-color: white;
+            border-radius: 0.25em;
+            padding: 0.25em;
+        }
+    }
+
+    .type-area {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+}
+
+.strike {
+    text-decoration: line-through;
 }
