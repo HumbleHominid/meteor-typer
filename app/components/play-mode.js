@@ -122,6 +122,11 @@ export default Component.extend({
         this.set('meteorCleanInterval', cleanMeteors);
         this.set('meteors', A());
     },
+    didRender() {
+        this._super(...arguments);
+        // focus the textarea
+        $('.type-area').focus();
+    },
     // be a good boy and clean up your mess
     destroy() {
         clearInterval(this.get('meteorSpawnInterval'));
@@ -137,6 +142,9 @@ export default Component.extend({
         testMeteors(e) {
             let meteors = this.get('meteors'),
                 text = e.target.value.toLowerCase();
+            if (text.indexOf('\n') !== -1) {
+                e.target.value = '';
+            }
             meteors.forEach((meteor) => {
                 if (meteor.text === text) {
                     meteor.destroy();
