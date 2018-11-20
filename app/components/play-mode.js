@@ -136,7 +136,7 @@ export default Component.extend({
     actions: {
         testMeteors(e) {
             let meteors = this.get('meteors'),
-                text = e.target.value;
+                text = e.target.value.toLowerCase();
             meteors.forEach((meteor) => {
                 if (meteor.text === text) {
                     meteor.destroy();
