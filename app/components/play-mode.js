@@ -47,7 +47,8 @@ const Meteor = EmberObject.extend({
     },
     getScore() {
         let curScore = this.get('lifetime') - Math.floor(this.get('curPos'));
-        return curScore * this.get('multiplier')
+        // note the times 2 is to get rid of the case where you have 0.5 scores
+        return curScore * this.get('multiplier') * 2;
     },
     destroy() {
         this._super(...arguments);
@@ -89,10 +90,12 @@ export default Component.extend({
     meteors: null,
     meteorSpawnInterval: null,
     meteorCleanInterval: null,
+    scoreTickerInterval: null,
     score: 0,
     // 10% chance
     meteorSpawnChance: 0.10,
     tickRate: 10,
+    lives: 3,
     init() {
         this._super(...arguments);
 
@@ -118,9 +121,12 @@ export default Component.extend({
             comp.set('score', newScore);
         }, 100, this)
 
-        this.set('meteorSpawnInterval', meteorSpawner);
-        this.set('meteorCleanInterval', cleanMeteors);
-        this.set('meteors', A());
+        this.setProperties({
+            meteorSpawnInterval: meteorSpawner,
+            meteorCleanInterval: cleanMeteors,
+            scoreTickerInterval: scoreTicker,
+            meteors: A()
+        })
     },
     didRender() {
         this._super(...arguments);

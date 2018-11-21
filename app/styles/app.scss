@@ -88,23 +88,36 @@ article {
         position: absolute;
         bottom: 0;
         width: 100%;
+        font-size: $font-size * 2;
     }
 
-    .meteor-score {
+    .display-text {
+        padding: 0.25em;
         position: absolute;
         display: grid;
         width: 100%;
-        grid-template-columns: 1fr 5em;
+        grid-template-columns: auto 1fr 1fr 5em;
         color: white;
         font-size: 2.5vh;
         text-shadow: 0.125em 0.125em black;
         grid-gap: 0.5em;
+
+        .lives-desc {
+            grid-column-start: 1;
+        }
+
+        .lives-value {
+            grid-column-start: 2;
+        }
+
         .score-desc {
             text-align: right;
+            grid-column-start: 3;
         }
-        // .score-value {
 
-        // }
+        .score-value {
+            grid-column-start: 4;
+        }
     }
 }
 
