@@ -1,6 +1,3 @@
-{{#each meteors as |meteor index|}}
-    {{meteor-display data=meteor}}
-{{/each}}
 <textarea type="text" rows="1" oninput={{action 'testMeteors'}} class="type-area" placeholder="Type responses here" />
 <div class="display-text">
     <div class="lives-desc">Lives:</div>
@@ -8,3 +5,10 @@
     <div class="score-desc">Score:</div>
     <div class="score-value">{{score}}</div>
 </div>
+{{#unless (less-than lives 1)}}
+    {{#each meteors as |meteor index|}}
+        {{meteor-display data=meteor}}
+    {{/each}}
+{{else}}
+    <h1 style="color:white;">Game over</h1>
+{{/unless}}

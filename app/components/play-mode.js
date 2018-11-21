@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { observer } from '@ember/object';
 import Meteor from '../utils/meteor';
 import { A } from '@ember/array';
 
@@ -13,22 +13,24 @@ export default Component.extend({
     // 10% chance
     meteorSpawnChance: 0.10,
     tickRate: 10,
-    lives: 3,
+    lives: 0,
+    gameObserver: observer('lives', function() {
+        if (this.get('lives') < 1) {
+            this.trigger('game-over');
+        }
+    }),
     init() {
         this._super(...arguments);
 
         this.setUpGame();
+        this.on('game-over', this.tearDownGame);
     },
     didRender() {
         this._super(...arguments);
-        // focus the textarea
-        $('.type-area').focus();
     },
     tearDownGame() {
         clearInterval(this.get('meteorSpawnInterval'));
-        clearInterval(this.get('meteorCleanInterval'));
         clearInterval(this.get('scoreTickerInterval'));
-        this.set('meteors', A());
     },
     setUpGame() {
         // set up the spawner for the meteors
@@ -43,11 +45,17 @@ export default Component.extend({
 
         // clean up the meteors object
         let cleanMeteors = setInterval(function(comp) {
-            let newMeteors = comp.get('meteors').filter(function(obj) {
-                return !(obj.isDestroying || obj.isDestroyed);
-            });
+            if (comp.get('lives') < 1) {
+                clearInterval(comp.get('meteorCleanInterval'));
+                comp.set('meteors', A());
+            }
+            else {
+                let newMeteors = comp.get('meteors').filter(function(obj) {
+                    return !(obj.isDestroying || obj.isDestroyed);
+                });
 
-            comp.set('meteors', newMeteors);
+                comp.set('meteors', newMeteors);
+            }
         }, this.get('tickRate'), this);
 
         // set up the passive score
@@ -61,7 +69,8 @@ export default Component.extend({
             meteorSpawnInterval: meteorSpawner,
             meteorCleanInterval: cleanMeteors,
             scoreTickerInterval: scoreTicker,
-            meteors: A()
+            meteors: A(),
+            lives: 3
         });
     },
     // be a good boy and clean up your mess
