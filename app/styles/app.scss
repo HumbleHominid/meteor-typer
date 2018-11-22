@@ -1,3 +1,10 @@
+$base-font-size: 1.5rem;
+
+@mixin white-text-with-shadow() {
+    color: white;
+    text-shadow: 0.125em 0.125em black;
+}
+
 body {
     margin: 0;
 }
@@ -44,16 +51,13 @@ article {
         flex-direction: column;
         grid-row-start: center;
         grid-column-start: center;
-        color: #ccc;
-        font-size: 4vh;
+        font-size: $base-font-size * 2;
 
         .menu-item {
+            @include white-text-with-shadow;
             text-align: center;
             &:hover {
                 cursor: pointer;
-            }
-            &.selected {
-                color: white;
             }
         }
     }
@@ -63,7 +67,6 @@ article {
     position: absolute;
     height: 100%;
     width: 100%;
-    $font-size: 2vh;
 
     .meteor {
         position: absolute;
@@ -80,7 +83,7 @@ article {
             background-color: white;
             border-radius: 0.25em;
             padding: 0.25em;
-            font-size: $font-size;
+            font-size: $base-font-size;
         }
     }
 
@@ -88,7 +91,7 @@ article {
         position: absolute;
         bottom: 0;
         width: 100%;
-        font-size: $font-size * 2;
+        font-size: $base-font-size;
     }
 
     .display-text {
@@ -98,9 +101,9 @@ article {
         width: 100%;
         grid-template-columns: auto 1fr 1fr 5em;
         color: white;
-        font-size: 2.5vh;
-        text-shadow: 0.125em 0.125em black;
+        font-size: $base-font-size;
         grid-gap: 0.5em;
+        @include white-text-with-shadow;
 
         .lives-desc {
             grid-column-start: 1;
@@ -118,6 +121,22 @@ article {
         .score-value {
             grid-column-start: 4;
         }
+    }
+
+    .alert-text {
+        @include white-text-with-shadow;
+        width: 100%;
+        text-align: center;
+        margin: 30vh auto;
+        font-size: 4rem;
+        margin-bottom: 0;
+    }
+
+    .score {
+        @include white-text-with-shadow;
+        width: 100%;
+        text-align: center;
+        font-size: $base-font-size;
     }
 }
 

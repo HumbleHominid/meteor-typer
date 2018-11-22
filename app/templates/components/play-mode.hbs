@@ -1,14 +1,19 @@
-<textarea type="text" rows="1" oninput={{action 'testMeteors'}} class="type-area" placeholder="Type responses here" />
-<div class="display-text">
-    <div class="lives-desc">Lives:</div>
-    <div class="lives-value">{{lives}}</div>
-    <div class="score-desc">Score:</div>
-    <div class="score-value">{{score}}</div>
-</div>
-{{#unless (less-than lives 1)}}
-    {{#each meteors as |meteor index|}}
-        {{meteor-display data=meteor}}
-    {{/each}}
+<textarea rows="1" oninput={{action 'testMeteors'}} class="type-area" placeholder="Type responses here" />
+{{#if countdown}}
+    <h1 class="alert-text">Game Begin: {{countdown}}</h1>
 {{else}}
-    <h1 style="color:white;">Game over</h1>
-{{/unless}}
+    <div class="display-text">
+        <div class="lives-desc">Lives:</div>
+        <div class="lives-value">{{lives}}</div>
+        <div class="score-desc">Score:</div>
+        <div class="score-value">{{score}}</div>
+    </div>
+    {{#if lives}}
+        {{#each meteors as |meteor index|}}
+            {{meteor-display data=meteor}}
+        {{/each}}
+    {{else}}
+        <h1 class="alert-text">Game over</h1>
+        <p class="score">You reached a score of {{score}}!</p>
+    {{/if}}
+{{/if}}

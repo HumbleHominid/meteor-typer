@@ -9,20 +9,29 @@ export default Component.extend({
     meteorSpawnInterval: null,
     meteorCleanInterval: null,
     scoreTickerInterval: null,
+    countdownInterval: null,
     score: 0,
     // 10% chance
-    meteorSpawnChance: 0.10,
+    meteorSpawnChance: 0.1,
     tickRate: 10,
     lives: 0,
+    countdown: 0,
     gameObserver: observer('lives', function() {
         if (this.get('lives') < 1) {
             this.trigger('game-over');
         }
     }),
+    countdownObserver: observer('countdown', function() {
+        if (this.get('countdown') === 0) {
+            clearInterval(this.get('countdownInterval'));
+            this.setUpGame();
+            // auto focus the textarea
+            $('.type-area').focus();
+        }
+    }),
     init() {
         this._super(...arguments);
-
-        this.setUpGame();
+        this.createCountdown();
         this.on('game-over', this.tearDownGame);
     },
     didRender() {
@@ -31,6 +40,17 @@ export default Component.extend({
     tearDownGame() {
         clearInterval(this.get('meteorSpawnInterval'));
         clearInterval(this.get('scoreTickerInterval'));
+    },
+    createCountdown() {
+        // countdown timer
+        let countdownTime = setInterval(function(comp) {
+            comp.decrementProperty('countdown')
+        }, 1000, this);
+
+        this.setProperties({
+            countdownInterval: countdownTime,
+            countdown: 3
+        });
     },
     setUpGame() {
         // set up the spawner for the meteors
@@ -41,7 +61,7 @@ export default Component.extend({
                     Math.random() < comp.get('meteorSpawnChance')) {
                 comp.createMeteor();
             }
-        }, 1 * 1000, this);
+        }, 1000, this);
 
         // clean up the meteors object
         let cleanMeteors = setInterval(function(comp) {
