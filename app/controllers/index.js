@@ -18,6 +18,9 @@ export default Controller.extend(Evented, {
     actions: {
         play(state) {
             this.stateChange(state);
+        },
+        menu() {
+            this.stateChange('main-menu');
         }
     }
 });

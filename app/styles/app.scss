@@ -138,6 +138,17 @@ article {
         text-align: center;
         font-size: $base-font-size;
     }
+
+    .game-over-option {
+        @include white-text-with-shadow;
+        width: 100%;
+        text-align-last: center;
+        font-size: $base-font-size * 1.5;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
 }
 
 .strike {

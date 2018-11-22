@@ -3,5 +3,5 @@
         {{main-menu playAction=(action 'play' 'play-mode')}}
     {{/menu-system}}
 {{else}}
-    {{component state}}
+    {{component state mainMenu=(action "menu")}}
 {{/if}}

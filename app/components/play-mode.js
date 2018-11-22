@@ -12,7 +12,7 @@ export default Component.extend({
     countdownInterval: null,
     score: 0,
     // 10% chance
-    meteorSpawnChance: 0.1,
+    meteorSpawnChance: 1.0,
     tickRate: 10,
     lives: 0,
     countdown: 0,
@@ -124,6 +124,9 @@ export default Component.extend({
                     this.set('score', score);
                 }
             })
+        },
+        playAgain() {
+            this.setUpGame();
         }
     }
 });

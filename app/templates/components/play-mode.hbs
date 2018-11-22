@@ -15,5 +15,7 @@
     {{else}}
         <h1 class="alert-text">Game over</h1>
         <p class="score">You reached a score of {{score}}!</p>
+        <h3 {{action "playAgain"}} class="game-over-option">Play Again</h3>
+        <h3 {{action mainMenu}} class="game-over-option">Back</h3>
     {{/if}}
 {{/if}}
