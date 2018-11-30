@@ -41,6 +41,7 @@ article {
     display: grid;
     height: 100%;
     width: 100%;
+    top: 0;
     grid-template-columns: auto [center] max-content auto;
     grid-template-rows: auto [center] auto auto;
 
@@ -153,4 +154,11 @@ article {
 
 .strike {
     text-decoration: line-through;
+}
+
+.title {
+    @include white-text-with-shadow;
+    font-size: $base-font-size * 2.75;
+    margin-bottom: 0;
+    text-align: center;
 }
