@@ -55,14 +55,14 @@ export default EmberObject.extend(Evented, {
     image: computed('velocity', function() {
         let velocity = this.get('velocity');
         let deltaSpeed = this.get('maxSpeed') - this.get('minSpeed');
-        if (velocity < (deltaSpeed / 2)) {
-            return 'slow';
+        if (velocity > (deltaSpeed / 3) * 2) {
+            return 'fast';
         }
-        else if (velocity < (deltaSpeed / 3) * 2) {
+        else if (velocity > (deltaSpeed / 2)) {
             return 'medium';
         }
         else {
-            return 'fast';
+            return 'slow';
         }
     }),
     curPos: computed('pos', 'lastUpdate', function() {

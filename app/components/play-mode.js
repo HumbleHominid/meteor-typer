@@ -16,6 +16,9 @@ export default Component.extend({
     tickRate: 10,
     lives: 0,
     countdown: 0,
+    initTime: 0,
+    maxTime: 600, // how long in seconds until 100% chance to spawn a meteor
+    offset: 0.1, // base chance to spawn meteor
     gameObserver: observer('lives', function() {
         if (this.get('lives') < 1) {
             this.trigger('game-over');
@@ -41,6 +44,21 @@ export default Component.extend({
         clearInterval(this.get('meteorSpawnInterval'));
         clearInterval(this.get('scoreTickerInterval'));
     },
+    chanceMeteorSpawn() {
+        let initTime = this.get('initTime'),
+            deltaTime = (new Date).getMilliseconds() - initTime,
+            deltaTimeSeconds = deltaTime / 1000,
+            maxTime = this.get('maxTime'),
+            offset = this.get('offset'),
+            modifier = Math.pow(1 - offset, 2) / maxTime,
+            independentVar;
+
+            if (deltaTimeSeconds > maxTime) independentVar = maxTime;
+            else if (deltaTimeSeconds < 0) independentVar = 0;
+            else independentVar = deltaTimeSeconds;
+
+        return Math.pow((modifier * independentVar), 0.5) + offset;
+    },
     createCountdown() {
         // countdown timer
         let countdownTime = setInterval(function(comp) {
@@ -58,7 +76,7 @@ export default Component.extend({
         let meteorSpawner = setInterval(function(comp) {
             // 10% chance to spawn a meteor every second
             if (comp.get('meteors.length') === 0 ||
-                    Math.random() < comp.get('meteorSpawnChance')) {
+                    Math.random() < comp.chanceMeteorSpawn()) {
                 comp.createMeteor();
             }
         }, 1000, this);
@@ -90,6 +108,7 @@ export default Component.extend({
             meteorCleanInterval: cleanMeteors,
             scoreTickerInterval: scoreTicker,
             meteors: A(),
+            initTime: (new Date).getMilliseconds(),
             lives: 3
         });
     },
