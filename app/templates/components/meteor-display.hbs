@@ -1,2 +1,6 @@
 <img class="meteor-img" src={{concat "meteor_" image ".png"}}>
-<div class="meteor-text">{{data.text}}</div>
+<div class="meteor-text">
+    {{#each meteor_text as |value index|}}
+        <span class={{concat (get value 1) '-text'}}>{{get value 0}}</span>
+    {{/each}}
+</div>

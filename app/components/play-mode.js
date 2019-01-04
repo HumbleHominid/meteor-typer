@@ -19,6 +19,7 @@ export default Component.extend({
     initTime: 0,
     maxTime: 600, // how long in seconds until 100% chance to spawn a meteor
     offset: 0.1, // base chance to spawn meteor
+    typedText: "",
     gameObserver: observer('lives', function() {
         if (this.get('lives') < 1) {
             this.trigger('game-over');
@@ -53,9 +54,9 @@ export default Component.extend({
             modifier = Math.pow(1 - offset, 2) / maxTime,
             independentVar;
 
-            if (deltaTimeSeconds > maxTime) independentVar = maxTime;
-            else if (deltaTimeSeconds < 0) independentVar = 0;
-            else independentVar = deltaTimeSeconds;
+        if (deltaTimeSeconds > maxTime) independentVar = maxTime;
+        else if (deltaTimeSeconds < 0) independentVar = 0;
+        else independentVar = deltaTimeSeconds;
 
         return Math.pow((modifier * independentVar), 0.5) + offset;
     },
@@ -72,7 +73,6 @@ export default Component.extend({
     },
     setUpGame() {
         // set up the spawner for the meteors
-        // TODO: make this dynamic
         let meteorSpawner = setInterval(function(comp) {
             // 10% chance to spawn a meteor every second
             if (comp.get('meteors.length') === 0 ||
@@ -109,7 +109,8 @@ export default Component.extend({
             scoreTickerInterval: scoreTicker,
             meteors: A(),
             initTime: (new Date).getMilliseconds(),
-            lives: 3
+            lives: 3,
+            score: 0
         });
     },
     // be a good boy and clean up your mess
@@ -131,13 +132,16 @@ export default Component.extend({
         testMeteors(e) {
             let meteors = this.get('meteors'),
                 text = e.target.value.toLowerCase();
+            this.set('typedText', text);
             if (text.indexOf('\n') !== -1) {
                 e.target.value = '';
+                this.set('typedText', '');
             }
             meteors.forEach((meteor) => {
                 if (meteor.text === text) {
                     meteor.destroy();
                     e.target.value = '';
+                    this.set('typedText', '');
                     let score = this.get('score');
                     score += meteor.getScore();
                     this.set('score', score);

@@ -10,7 +10,7 @@
     </div>
     {{#if lives}}
         {{#each meteors as |meteor index|}}
-            {{meteor-display data=meteor}}
+            {{meteor-display data=meteor typedText=typedText}}
         {{/each}}
     {{else}}
         <h1 class="alert-text">Game over</h1>

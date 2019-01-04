@@ -85,6 +85,19 @@ article {
             border-radius: 0.25em;
             padding: 0.25em;
             font-size: $base-font-size;
+            display: flex;
+
+            & .correct-text {
+                color: green;
+            }
+
+            & .incorrect-text {
+                color: red;
+            }
+
+            & .spare-text {
+                color: black;
+            }
         }
     }
 
